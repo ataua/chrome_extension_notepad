@@ -1,0 +1,25 @@
+# Chrome Extension specifics
+*.crx
+*.pem
+*.zip
+
+# IDE
+.idea/
+.vscode/
+*.swp
+*.swo
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Logs
+*.log
+
+# Node (if you use build tools)
+node_modules/
+npm-debug.log*
+
+# Temporary files
+*.tmp
+.cache/

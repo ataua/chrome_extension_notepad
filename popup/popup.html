@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Notepad por Site</title>
+    <link rel="stylesheet" href="popup.css">
+</head>
+<body>
+    <div id="view-list" class="view">
+        <div class="header">
+            <h1>Anotações</h1>
+            <div class="controls">
+                <button id="btn-config" class="icon-btn" title="Configurar padrão de URL">⚙️</button>
+                <button id="btn-export" class="icon-btn" title="Exportar">💾</button>
+                <button id="btn-new" class="primary-btn">+ Nova Anotação</button>
+            </div>
+        </div>
+        <div id="notes-list" class="notes-container">
+        </div>
+        <div id="loading-indicator" class="loading">Carregando...</div>
+    </div>
+
+    <div id="view-editor" class="view">
+        <div class="header">
+            <button id="btn-back" class="back-btn">← Voltar</button>
+            <h2 id="editor-title">Nova Anotação</h2>
+        </div>
+        <div class="editor-container">
+            <input type="text" id="note-title" placeholder="Título da anotação" maxlength="100">
+            <textarea id="note-content" placeholder="Digite seu conteúdo aqui..."></textarea>
+            <div id="save-status" class="save-status">Pronto</div>
+        </div>
+    </div>
+
+    <div id="view-config" class="view">
+        <div class="header">
+            <button id="btn-back-from-config" class="back-btn">← Voltar</button>
+            <h2>Configurar Padrão de URL</h2>
+        </div>
+<div class="config-container">
+                <p>Selecione como esta plataforma extrai anotações:</p>
+                <div id="url-preview" style="font-size:11px;color:#888;margin-bottom:12px;padding:8px;background:#1e1e1e;border-radius:4px;word-break:break-all"></div>
+            
+            <div class="radio-group">
+                <label class="radio-item">
+                    <input type="radio" name="pattern" value="path-segment" checked>
+                    <div class="radio-content">
+                        <strong>Segunda pasta do path</strong>
+                        <small>Ex: /courses/8591 → "8591"</small>
+                    </div>
+                </label>
+                
+                <label class="radio-item">
+                    <input type="radio" name="pattern" value="domain-only">
+                    <div class="radio-content">
+                        <strong>Domínio completo</strong>
+                        <small>Ex: online.igti.com.br</small>
+                    </div>
+                </label>
+                
+                <label class="radio-item">
+                    <input type="radio" name="pattern" value="full-url">
+                    <div class="radio-content">
+                        <strong>URL completa</strong>
+                        <small>Usada na íntegra</small>
+                    </div>
+                </label>
+                
+                <label class="radio-item custom-regex">
+                    <input type="radio" name="pattern" value="regex">
+                    <div class="radio-content">
+                        <strong>Regex customizado</strong>
+                        <small>Use grupos de captura para extração</small>
+                    </div>
+                </label>
+            </div>
+            
+            <div id="regex-input" class="hidden">
+                <label>Expressão Regular:</label>
+                <input type="text" id="regex-pattern" placeholder="/courses/(\d+)">
+                <small>Use ( ) para capturar a parte desejada</small>
+            </div>
+            
+            <div id="path-segment-input" class="hidden">
+                <label>Índice do segmento (base-1):</label>
+                <input type="number" id="segment-index" min="1" value="2">
+                <small>Ex: 2 para /courses/8591</small>
+            </div>
+            
+            <button id="btn-save-config" class="primary-btn">Salvar Configuração</button>
+        </div>
+    </div>
+
+    <div id="modal-export" class="modal hidden">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3>Exportar Anotações</h3>
+                <button id="btn-close-modal" class="close-btn">×</button>
+            </div>
+            <div class="modal-body">
+                <div class="export-options">
+                    <label class="checkbox-item">
+                        <input type="checkbox" id="export-all" checked>
+                        <span>Banco de dados completo</span>
+                    </label>
+                    <label class="checkbox-item">
+                        <input type="checkbox" id="export-current">
+                        <span>Domínio atual apenas</span>
+                    </label>
+                    <label class="checkbox-item" id="export-selection-container" class="hidden">
+                        <input type="checkbox" id="export-selection">
+                        <span>Selecionar anotações</span>
+                    </label>
+                </div>
+                <div id="selection-list" class="hidden">
+                    <label>Selecionar anotações:</label>
+                    <div id="selection-items" class="selection-items">
+                    </div>
+                </div>
+                <div class="modal-actions">
+                    <button id="btn-cancel-export" class="secondary-btn">Cancelar</button>
+                    <button id="btn-confirm-export" class="primary-btn">Exportar</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div id="modal-confirm" class="modal hidden">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3>Confirmar Exclusão</h3>
+                <button id="btn-close-confirm" class="close-btn">×</button>
+            </div>
+            <div class="modal-body">
+                <p>Tem certeza que deseja excluir esta anotação?</p>
+                <div class="modal-actions">
+                    <button id="btn-cancel-delete" class="secondary-btn">Cancelar</button>
+                    <button id="btn-confirm-delete" class="danger-btn">Excluir</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="popup.js"></script>
+</body>
+</html>
